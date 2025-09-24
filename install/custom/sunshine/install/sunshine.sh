@@ -24,3 +24,14 @@ Exec=sunshine
 Terminal=false
 Comment=Start Sunshine on login
 EOF
+
+# Notify user to configure Sunshine on first run by prepending a notification command to welcome.sh
+echo "Adding notification to configure Sunshine on first run..."
+sed -i '1inotify-send -u critical "☀️ Configure Sunshine" "Click here to configure Sunshine."' $OMARCHY_INSTALL/first-run/welcome.sh
+
+# Add handler to mako notifications to open Sunshine config in browser
+tee ~/.local/share/omarchy/default/mako/core.ini <<'EOF'
+
+[summary~="Configure Sunshine"]
+on-button-left=exec sh -c 'omarchy-notification-dismiss "Configure Sunshine"; omarchy-launch-browser https://localhost:47990'
+EOF
