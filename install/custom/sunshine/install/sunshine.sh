@@ -1,33 +1,24 @@
-# Start and configure Sunshine
+echo "Setting Sunshine configuration UI credentials..."
+sunshine --creds sunshine sunshine # TODO: use actual user's credentials
+
 echo "Starting Sunshine..."
 sunshine > /dev/null 2>&1 &
 
-echo "Waiting for Sunshine to start..."
-sleep 10
+echo "Waiting for Sunshine configuration UI to start..."
+local sunshine_log=~/.config/sunshine/sunshine.log
+while ! grep -q "Configuration UI available" "$sunshine_log"; do
+  sleep 1
+done
 
-local sunshine_url=$(grep "Configuration UI available" ~/.config/sunshine/sunshine.log | grep -oP "at \[\K.+(?=\])")
-if [ -n "$sunshine_url" ]; then
-  echo "Sunshine is running."
-  echo
-  echo "Press any key to launch the Sunshine configuration UI. While in there you should:"
-  echo "1. Set a username and password for the web interface."
-  echo "2. Register your remote Moonlight client."
-  echo "3. Configure any other settings you want."
-  echo
-  echo "Return here to continue setup when complete."
-  read -n 1 -s < /dev/tty
-  omarchy-launch-webapp "$sunshine_url" > /dev/null 2>&1 &
-  echo
-  echo "Once you have finished configuring Sunshine, press any key to continue."
-  read -n 1 -s < /dev/tty
+# Extract the Sunshine configuration UI URL from the log file
+local sunshine_url=$(grep "Configuration UI available" "$sunshine_log" | grep -oP "at \[\K.+(?=\])")
 
-  # Fetch icon for Sunshine configuration UI
-  echo
-  curl --silent --output ~/.local/share/applications/icons/sunshine-config.png \
-    https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/sunshine.png
+echo "Downloading Sunshine icon..."
+curl --silent --output ~/.local/share/applications/icons/sunshine-config.png \
+  https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/sunshine.png
 
-  # Add menu item for Sunshine configuration UI
-  cat <<EOF > ~/.local/share/applications/sunshine-config.desktop
+echo "Creating desktop entry for Sunshine configuration UI..."
+tee ~/.local/share/applications/sunshine-config.desktop <<'EOF' >/dev/null
 [Desktop Entry]
 Version=1.0
 Name=Sunshine Config
@@ -38,15 +29,9 @@ Type=Application
 Icon=/home/steve/.local/share/applications/icons/sunshine-config.png
 StartupNotify=true
 EOF
-else
-  echo "Could not find the Sunshine configuration UI URL in the log file."
-  echo "Press any key to continue."
-  read -n 1 -s < /dev/tty
-fi
 
-# Enable Sunshine service
 echo "Enabling Sunshine to start on login..."
-cat <<EOF > ~/.config/autostart/sunshine.desktop
+tee ~/.config/autostart/sunshine.desktop <<'EOF' >/dev/null
 [Desktop Entry]
 Type=Application
 Name=Sunshine Autostart
