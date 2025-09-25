@@ -1,7 +1,7 @@
 echo "Installing Sunshine from LizardByte repository..."
 if ! grep -q "^\[lizardbyte\]" /etc/pacman.conf; then
   echo "Adding LizardByte repository to pacman..."
-  sudo cat <<EOF >> /etc/pacman.conf
+  cat <<'EOF' | sudo tee -a /etc/pacman.conf
 
 [lizardbyte]
 SigLevel = Optional
