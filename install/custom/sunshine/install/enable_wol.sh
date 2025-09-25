@@ -1,10 +1,10 @@
 echo "Enabling Wake-on-LAN for the active network interface..."
-local interface=$(ip -j -d link | jq -r '.[] | {ifname, operstate, address} | select(.operstate == "UP")')
+interface=$(ip -j -d link | jq -r '.[] | {ifname, operstate, address} | select(.operstate == "UP")')
 if [ -n "$interface" ]; then
-  local interface_name=$(echo "$interface" | jq -r '.ifname')
+  interface_name=$(echo "$interface" | jq -r '.ifname')
   sudo ethtool -s "$interface_name" wol g
-  local mac_address=$(echo "$interface" | jq -r '.address')
-  cat <<'EOF' | sudo tee /etc/systemd/network/10-wol.link >/dev/null
+  mac_address=$(echo "$interface" | jq -r '.address')
+  cat <<EOF | sudo tee /etc/systemd/network/10-wol.link >/dev/null
 [Match]
 MACAddress=$mac_address
 
