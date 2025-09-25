@@ -1,5 +1,13 @@
-run_logged $OMARCHY_INSTALL/custom/sunshine/install/packages.sh
-run_logged $OMARCHY_INSTALL/custom/sunshine/install/openssh.sh
-run_logged $OMARCHY_INSTALL/custom/sunshine/install/lock_screen.sh
-run_logged $OMARCHY_INSTALL/custom/sunshine/install/sunshine.sh
-run_logged $OMARCHY_INSTALL/custom/sunshine/install/enable_wol.sh
+declare -a files=(
+  packages
+  openssh
+  lock_screen
+  sunshine
+  enable_wol
+)
+
+source_dir=$(dirname ${BASH_SOURCE[0]})
+
+for file in "${files[@]}"; do
+  run_logged $source_dir/$file.sh
+done
