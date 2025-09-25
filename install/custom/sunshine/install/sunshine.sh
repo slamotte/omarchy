@@ -1,19 +1,15 @@
 echo "Installing Sunshine from LizardByte repository..."
 
-# Add LizardByte repo to user's pacman.conf AND template. Both are necessary because
-# the template will overwrite /etc/pacman.conf later in post-install/pacman.sh.
-pacman_conf_files=(/etc/pacman.conf ~/.local/share/omarchy/default/pacman/pacman.conf)
-for pacman_conf in "${pacman_conf_files[@]}"; do
-  if ! grep -q "^\[lizardbyte\]" $pacman_conf; then
-    echo "Adding LizardByte repository to $pacman_conf..."
-    cat <<'EOF' | sudo tee -a $pacman_conf
+# Add LizardByte repo to pacman.conf
+if ! grep -q "^\[lizardbyte\]" /etc/pacman.conf; then
+  echo "Adding LizardByte repository to pacman.conf..."
+  cat <<'EOF' | sudo tee -a /etc/pacman.conf
 
 [lizardbyte]
 SigLevel = Optional
 Server = https://github.com/LizardByte/pacman-repo/releases/latest/download
 EOF
-  fi
-done
+fi
 
 echo "Installing Sunshine..."
 sudo pacman -Sy sunshine --noconfirm
