@@ -34,11 +34,11 @@ EOF
 echo "Enabling Sunshine to start on login..."
 tee ~/.config/autostart/sunshine.desktop <<'EOF' >/dev/null
 [Desktop Entry]
-Type=Application
 Name=Sunshine Autostart
+Comment=Start Sunshine on login
 Exec=sunshine
 Terminal=false
-Comment=Start Sunshine on login
+Type=Application
 EOF
 
 # Notify user to configure Sunshine on first run by prepending a notification command to welcome.sh

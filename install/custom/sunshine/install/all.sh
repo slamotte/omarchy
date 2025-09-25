@@ -1,7 +1,7 @@
 declare -a files=(
-  packages
-  openssh
   lock_screen
+  openssh
+  packages
   sunshine
   enable_wol
 )
