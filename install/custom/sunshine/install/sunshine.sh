@@ -15,11 +15,11 @@ echo "Installing Sunshine..."
 sudo pacman -Sy sunshine --noconfirm
 
 echo "Downloading Sunshine icon..."
-curl --silent --output ~/.local/share/applications/icons/sunshine-config.png \
-  https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/sunshine.png
+icon_file=$(readlink -f ~/.local/share/applications/icons/sunshine-config.png)
+curl --silent --output $icon_file https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/sunshine.png
 
 echo "Creating desktop entry for Sunshine configuration UI..."
-tee ~/.local/share/applications/sunshine-config.desktop <<'EOF' >/dev/null
+tee ~/.local/share/applications/sunshine-config.desktop <<EOF >/dev/null
 [Desktop Entry]
 Version=1.0
 Name=Sunshine Config
@@ -27,7 +27,7 @@ Comment=Sunshine Configuration UI
 Exec=omarchy-launch-webapp https://localhost:47990
 Terminal=false
 Type=Application
-Icon=~/.local/share/applications/icons/sunshine-config.png
+Icon=$icon_file
 StartupNotify=true
 EOF
 
