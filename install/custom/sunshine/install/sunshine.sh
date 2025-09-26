@@ -41,7 +41,7 @@ tee ~/.config/autostart/sunshine.desktop <<'EOF' >/dev/null
 [Desktop Entry]
 Name=Sunshine Autostart
 Comment=Start Sunshine on login
-Exec=sunshine
+Exec=sleep 10s && sunshine &
 Terminal=false
 Type=Application
 EOF
