@@ -14,6 +14,11 @@ fi
 echo "Installing Sunshine..."
 sudo pacman -Sy sunshine --noconfirm
 
+# Register a UFW application profile for Sunshine.
+# This will be applied on the first boot as part of first-run.
+# See https://docs.lizardbyte.dev/projects/sunshine/latest/md_docs_2configuration.html#port
+sudo cp $OMARCHY_INSTALL/custom/sunshine/install/ufw-sunshine /etc/ufw/applications.d/ufw-sunshine
+
 echo "Downloading Sunshine icon..."
 icon_file=$(readlink -f ~/.local/share/applications/icons/sunshine-config.png)
 curl --silent --output $icon_file https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/sunshine.png
