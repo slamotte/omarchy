@@ -1,4 +1,0 @@
-[Sunshine]
-title=Sunshine
-description=Sunshine HTTPS/HTTP/Web UI/RTSP/Video/Gamepad/Audio
-ports=47984,47989,47990,48010/tcp|47998:48000/udp

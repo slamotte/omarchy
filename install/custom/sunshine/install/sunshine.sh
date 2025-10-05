@@ -17,7 +17,12 @@ sudo pacman -Sy sunshine --noconfirm
 # Register a UFW application profile for Sunshine.
 # This will be applied on the first boot as part of first-run.
 # See https://docs.lizardbyte.dev/projects/sunshine/latest/md_docs_2configuration.html#port
-sudo cp $OMARCHY_INSTALL/custom/sunshine/install/ufw-sunshine /etc/ufw/applications.d/ufw-sunshine
+sudo tee /etc/ufw/applications.d/ufw-sunshine <<EOF >/dev/null
+[Sunshine]
+title=Sunshine
+description=Sunshine HTTPS/HTTP/Web UI/RTSP/Video/Gamepad/Audio
+ports=47984,47989,47990,48010/tcp|47998:48000/udp
+EOF
 
 echo "Downloading Sunshine icon..."
 icon_file=$(readlink -f ~/.local/share/applications/icons/sunshine-config.png)
