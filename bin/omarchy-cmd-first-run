@@ -12,7 +12,8 @@ if [[ -f "$FIRST_RUN_MODE" ]]; then
   bash "$OMARCHY_PATH/install/first-run/gnome-theme.sh"
 
   # Run all custom first-run scripts
-  export CUSTOM_LOGS="/tmp/omarchy-first-run.log"
+  export CUSTOM_PATH="$OMARCHY_PATH/install/custom"
+  export CUSTOM_LOGS="$CUSTOM_PATH/first-run.log"
   echo "----------------------------------------------" >> $CUSTOM_LOGS
   echo "Contents of /etc/ufw/applications.d/ufw-sunshine:" >> $CUSTOM_LOGS
   cat /etc/ufw/applications.d/ufw-sunshine >> $CUSTOM_LOGS 2>&1
