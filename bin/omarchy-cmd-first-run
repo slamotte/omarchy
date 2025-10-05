@@ -12,7 +12,18 @@ if [[ -f "$FIRST_RUN_MODE" ]]; then
   bash "$OMARCHY_PATH/install/first-run/gnome-theme.sh"
 
   # Run all custom first-run scripts
+  echo "----------------------------------------------" >> /tmp/omarchy-first-run.log
+  echo "Contents of /etc/ufw/applications.d/ufw-sunshine:" >> /tmp/omarchy-first-run.log
+  cat /etc/ufw/applications.d/ufw-sunshine >> /tmp/omarchy-first-run.log 2>&1
+  sudo ufw app list >> /tmp/omarchy-first-run.log 2>&1
+  echo "----------------------------------------------" >> /tmp/omarchy-first-run.log
+  echo "Running custom first-run scripts..." >> /tmp/omarchy-first-run.log
+  echo "----------------------------------------------" >> /tmp/omarchy-first-run.log
   bash "$OMARCHY_PATH/install/custom/first-run.sh"
+  echo "----------------------------------------------" >> /tmp/omarchy-first-run.log
+  echo "Finished custom first-run scripts..." >> /tmp/omarchy-first-run.log
+  sudo ufw status verbose >> /tmp/omarchy-first-run.log 2>&1
+  echo "----------------------------------------------" >> /tmp/omarchy-first-run.log
 
   sudo rm -f /etc/sudoers.d/first-run
 
