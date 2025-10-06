@@ -12,7 +12,7 @@ if [[ -f "$FIRST_RUN_MODE" ]]; then
   bash "$OMARCHY_PATH/install/first-run/gnome-theme.sh"
 
   # Run all custom first-run scripts
-  CUSTOM_PATH="$OMARCHY_PATH/install/custom"
+  export CUSTOM_PATH="$OMARCHY_PATH/install/custom"
   bash "$CUSTOM_PATH/first-run.sh"
 
   sudo rm -f /etc/sudoers.d/first-run
