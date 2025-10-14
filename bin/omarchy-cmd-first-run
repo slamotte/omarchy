@@ -1,23 +1,23 @@
 #!/bin/bash
 
-echo "In omarchy-cmd-first-run..." >> /var/log/first-run.log
+echo "In omarchy-cmd-first-run..." >> $OMARCHY_PATH/install/first-run.log
 set -e
 
 FIRST_RUN_MODE=~/.local/state/omarchy/first-run.mode
 
 if [[ -f "$FIRST_RUN_MODE" ]]; then
-echo "First run mode detected. Executing first run scripts..." >> /var/log/first-run.log
+echo "First run mode detected. Executing first run scripts..." >> $OMARCHY_PATH/install/first-run.log
   rm -f "$FIRST_RUN_MODE"
 
   bash "$OMARCHY_PATH/install/first-run/battery-monitor.sh"
-echo "Calling firewall.sh..." >> /var/log/first-run.log
-  bash "$OMARCHY_PATH/install/first-run/firewall.sh" >> /var/log/first-run-firewall.log 2>&1
-echo "Back from firewall.sh..." >> /var/log/first-run.log
+echo "Calling firewall.sh..." >> $OMARCHY_PATH/install/first-run.log
+  bash "$OMARCHY_PATH/install/first-run/firewall.sh" >> $OMARCHY_PATH/install/first-run.log 2>&1
+echo "Back from firewall.sh..." >> $OMARCHY_PATH/install/first-run.log
   bash "$OMARCHY_PATH/install/first-run/gnome-theme.sh"
   sudo rm -f /etc/sudoers.d/first-run
 
   bash "$OMARCHY_PATH/install/first-run/wifi.sh"
   bash "$OMARCHY_PATH/install/first-run/welcome.sh"
 else
-  echo "First run mode not detected. Skipped first run scripts..." >> /var/log/first-run.log
+  echo "First run mode not detected. Skipped first run scripts..." >> $OMARCHY_PATH/install/first-run.log
 fi
