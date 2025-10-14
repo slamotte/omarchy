@@ -13,11 +13,13 @@ sudo ufw allow 22/tcp
 sudo ufw allow in proto udp from 172.16.0.0/12 to 172.17.0.1 port 53 comment 'allow-docker-dns'
 
 # Turn on the firewall
-sudo ufw --force enable
+sudo ufw enable
 
 # Turn on Docker protections
-sudo ufw-docker install
-sudo ufw reload
+# sudo ufw-docker install
+# sudo ufw reload
+# Maybe restart everything?
+# sudo systemctl restart ufw docker
 
-# Start UFW and enable systemd service to start on boot
+# Enable systemd service to start on boot
 sudo systemctl enable ufw
