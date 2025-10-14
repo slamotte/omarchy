@@ -27,28 +27,14 @@ if sudo test -f /etc/sudoers.d/99-omarchy-installer; then
 fi
 
 # Exit gracefully if user chooses not to reboot
-if gum confirm --padding "0 0 0 $((PADDING_LEFT + 32))" --show-help=false --default --affirmative "Reboot Now" --negative "Exit" ""; then
-  echo "Rebooting the old way"
-  reboot
-
-  echo "You chose to reboot."
-  sleep 10
+if gum confirm --padding "0 0 0 $((PADDING_LEFT + 32))" --show-help=false --default --affirmative "Reboot Now" --negative "" ""; then
   # Clear screen to hide any shutdown messages
-  # clear
+  clear
 
   # Use systemctl if available, otherwise fallback to reboot command
   if command -v systemctl &>/dev/null; then
-    echo "Rebooting using systemctl..."
-    systemctl reboot --no-wall
-    echo "Should never get here..."
+    systemctl reboot --no-wall 2>/dev/null
   else
-    echo "Rebooting using reboot command..."
     reboot 2>/dev/null
-    echo "Should never get here either..."
   fi
-else
-  echo "You chose to exit without rebooting."
-  echo "Please remember to reboot later to apply all changes."
-  echo "Exiting installer..."
-  exit 0
 fi
