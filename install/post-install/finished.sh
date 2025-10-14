@@ -36,12 +36,10 @@ if gum confirm --padding "0 0 0 $((PADDING_LEFT + 32))" --show-help=false --defa
   # Use systemctl if available, otherwise fallback to reboot command
   if command -v systemctl &>/dev/null; then
     echo "Rebooting using systemctl..."
-    sleep 10
-    systemctl reboot --no-wall 2>/dev/null
+    systemctl reboot --no-wall
     echo "Should never get here..."
   else
     echo "Rebooting using reboot command..."
-    sleep 10
     reboot 2>/dev/null
     echo "Should never get here either..."
   fi
