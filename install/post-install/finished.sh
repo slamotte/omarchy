@@ -27,11 +27,13 @@ if sudo test -f /etc/sudoers.d/99-omarchy-installer; then
 fi
 
 # Exit gracefully if user chooses not to reboot
-if gum confirm --padding "0 0 0 $((PADDING_LEFT + 32))" --show-help=false --default --affirmative "Reboot Now" --negative "" ""; then
+if gum confirm --padding "0 0 0 $((PADDING_LEFT + 32))" --show-help=false --default --affirmative "Reboot Now" --negative "Exit to Command Line" ""; then
   # Clear screen to hide any shutdown messages
   clear
 
   # This script runs inside a chroot jail, so attempts to directly reboot the system from here fail.
   # Instead, create a file that signals the need for a reboot once we exit the chroot.
   touch $OMARCHY_INSTALL/reboot-requested
+else
+  echo "Manually reboot the system later to complete the installation."
 fi
