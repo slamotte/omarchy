@@ -27,7 +27,7 @@ if sudo test -f /etc/sudoers.d/99-omarchy-installer; then
 fi
 
 # Exit gracefully if user chooses not to reboot
-if gum confirm --padding "0 0 0 $((PADDING_LEFT + 32))" --show-help=false --default --affirmative "Reboot Now" --negative "Exit to Command Line" ""; then
+if gum confirm --padding "0 0 0 $((PADDING_LEFT + 19))" --show-help=false --default --affirmative "Reboot Now" --negative "Exit to Command Line" ""; then
   # Clear screen to hide any shutdown messages
   clear
 
