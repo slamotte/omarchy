@@ -31,10 +31,7 @@ if gum confirm --padding "0 0 0 $((PADDING_LEFT + 32))" --show-help=false --defa
   # Clear screen to hide any shutdown messages
   clear
 
-  # Use systemctl if available, otherwise fallback to reboot command
-  if command -v systemctl &>/dev/null; then
-    systemctl reboot --no-wall 2>/dev/null
-  else
-    reboot 2>/dev/null
-  fi
+  # This script runs inside a chroot jail, so attempts to directly reboot the system from here fail.
+  # Instead, create a file that signals the need for a reboot once we exit the chroot.
+  touch $OMARCHY_INSTALL/reboot-requested
 fi
